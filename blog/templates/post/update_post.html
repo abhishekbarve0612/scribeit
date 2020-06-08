@@ -1,0 +1,34 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+        Update Post
+    {% endblock head %}
+
+{% block head-extra %}
+    {{ form.media }}
+{% endblock head-extra %}
+
+{% block content %}
+    
+<div class="container-fluid" style="padding-top: 120px;">
+
+    <form method="POST" action="." enctype="multipart/form-data"> {% csrf_token %}
+        <div class="row">
+                    <div class="col-8">
+                        {{ form|crispy }}
+                    </div>
+                <div class="col-4">
+                    {% if imgurl.url %}
+                    <h4>Uploaded Image:</h4>
+                    <img src="{{ imgurl.url }}" style="width: 400px; height: 400px;">
+                    {% endif%}
+                </div>
+            </div>  
+        <input type="submit" value="Save"/>
+    </form>
+
+</div>
+
+{% endblock content %}
+    

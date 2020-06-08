@@ -1,0 +1,265 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load cloudinary %}
+{% cloudinary_includes %}
+<!--  Profile  -->
+<!--  Card     -->
+{% block extrahead %}
+	{{ form.media }}
+{% endblock extrahead %}
+
+{% block content %}
+	
+
+	
+<section class="fcard" style="background: #ffd180">
+	
+  <div class="row">
+  	<div class="col l3"></div>
+    <div class="col s12 m6 l6">
+      <div class="card" style="width: 550px; height: auto;">
+     
+
+        <div class="card-image">
+        	  
+        	   <div class="cover">
+                   <!-- User Profile Image -->
+				   <img class="cover-pic" src="
+				   {% if cp.url %}
+				   {{ cp.url }}
+			  {% else %}
+			  {% static 'assets/images/cpic1.png' %}
+				{% endif %}   
+				   ">
+
+                   <!-- Default Image -->
+                   <!-- <i class="fa fa-user fa-5x"></i> -->
+				</div>
+				<form id="editprofile" method = "POST" action="." enctype="multipart/form-data"> {% csrf_token %}
+                <div class="c-image">
+				   <i class="fa fa-edit upload-cpic-button "> Edit</i>
+				   {{ form.coverPic|add_class:'file-cpic-upload'|attr:"type:file" }}
+                   <!-- <input class="file-cpic-upload" name="coverPic" type="file" accept="image/*"/> -->
+                </div>
+
+
+
+        	  <div class="profile">
+                   <!-- User Profile Image -->
+				   <img class="profile-pic" id="profilepicpreview" src="
+				   {% if pp.url %}
+						{{ pp.url }}
+				   {% else %}
+				   {% static 'assets/images/mypic.jpg' %}
+				 	{% endif %}  
+				   ">
+					
+                   <!-- Default Image -->
+                   <!-- <i class="fa fa-user fa-5x"></i> -->
+                </div>
+                <div class="p-image">
+				   <i class="fa fa-camera upload-button "></i>
+				   {{ form.profilePic|add_class:'file-upload'|attr:"type:file"|attr:"style:'display:none;'" }}
+                   <!-- <input class="file-upload" name="profilePic" type="file" accept="image/*"/> -->
+                </div>
+
+         </div>
+
+        <div class="card-content">
+        	
+			      <div class="row ">
+					
+			        <div class="input-field col s6">
+						{{ myform.first_name|add_class:'validate' }}
+					  <!-- <input type="text" id="first-name" name="first_name" class="validate"> -->
+			          <label class="grey-text text-darken-4" for="first-name">First Name</label>
+			        </div>
+
+			        <div class="input-field col s6">
+						{{ myform.last_name|add_class:'validate' }}
+			        	<!-- <input type="text" id="last-name" name="last_name" class="validate"> -->
+			            <label class="grey-text text-darken-4" for="last-name">Last Name</label>
+			         </div>
+
+			         <div class="input-field col s12">
+						{{ myform.email|add_class:'validate' }}
+			        	<!-- <input type="email" name="email" id="email" class="validate"> -->
+			            <label class="grey-text text-darken-4" for="email">Email Id</label>
+			         </div>
+
+			         <div class="input-field col s12 avoidEnter">
+						{{ form.description|add_class:'materialize-textarea avoidEnter' }}
+			        	<!-- <textarea id="description" name="description" class="materialize-textarea" data-length="120"></textarea> -->
+			            <label class="grey-text text-darken-4" for="description">About</label>
+			         </div>
+
+			         <div class="input-field col s12">
+						{{ form.mobileNumber|add_class:'validate' }}
+			        	<!-- <input type="text" id="mobile" name="mobileNumber" class="validate"> -->
+			            <label class="grey-text text-darken-4" for="mobile">Mobile No.</label>
+			         </div>
+
+			         <div class="input-field col s12">
+						{{ form.address|add_class:'materialize-textarea' }}
+			        	<!-- <textarea id="address" name="address" class="materialize-textarea" data-length="30"></textarea> -->
+			            <label class="grey-text text-darken-4" for="address">Address</label>
+			         </div>
+
+			         <div class="input-field col s12">
+						<p><span class="grey-text text-darken-4">Gender:</span></p>
+						<p><label>
+						   <input class="with-gap" name="gender" type="radio" value="Male"  {% if a.gender == "Male" %} checked {% endif %} required/>
+						   <span class="grey-text text-darken-4">Male</span>
+						</label></p>
+						 <p><label>
+						   <input class="with-gap" name="gender" type="radio" value="Female" {% if a.gender == "Female" %} checked {% endif %} required />
+						   <span class="grey-text text-darken-4">Female</span>
+						</label></p>
+						 <p><label>
+						   <input class="with-gap" name="gender" type="radio"  value="Other" {% if a.gender == "Other" %} checked {% endif %} required />
+						   <span class="grey-text text-darken-4">Other</span>
+						</label></p>
+						</div>
+
+
+			         <div class="input-field col s12">
+			         	<p><span class="grey-text text-darken-4">Interest and Hobbies:</span></p>
+			           <div class="chips chips-placeholder">
+						{{ form.interest }}
+							<!-- <input class="" name="interest" type="text"   /> -->
+					   </div>
+			        </div>
+
+			        <div class="input-field col s12">
+			         	<p><span class="grey-text text-darken-4">Skills:</span></p>
+						 <div class="chips chips-placeholder">
+							{{ form.skills }}
+							<!-- <input class="" name="skills" type="text"   /> -->
+					   </div>
+			        </div>
+
+			        <div class="input-field col s12">
+			         	<p><span class="grey-text text-darken-4">Favorite Movies:</span></p>
+						 <div class="chips chips-placeholder">
+							{{ form.fav_movie }}
+							<!-- <input class="" name="fav_movie" type="text"   /> -->
+					   </div>
+			        </div>
+
+			        <div class="input-field col s12">
+			         	<p><span class="grey-text text-darken-4">Favorite Music:</span></p>
+						 <div class="chips chips-placeholder">
+							{{ form.fav_music }}
+							<!-- <input class="" name="fav_music" type="text"   /> -->
+					   </div>
+			        </div>
+
+			        <div class="input-field col s12">
+			         	<p><span class="grey-text text-darken-4">Favorite Books:</span></p>
+						 <div class="chips chips-placeholder">
+							{{ form.fav_books }}
+							<!-- <input class="" name="fav_books" type="text"   /> -->
+					   </div>
+			        </div>
+
+			        <div class="input-field col s12">
+						{{ form.website|add_class:'validate' }}
+			          <!-- <input type="text" id="website" name="website" class="validate"> -->
+			          <label class="grey-text text-darken-4" for="website">Website</label>
+			        </div>
+
+                      <div class="input-field col s12">
+						{{ form.facebook_url|add_class:'validate' }}
+			          <!-- <input type="text" name="facebook_url" id="facebook" class="validate"> -->
+			          <label class="grey-text text-darken-4" for="facebook">Facebook Profile</label>
+			        </div>
+
+			         <div class="input-field col s12">
+						{{ form.instagram_url|add_class:'validate' }}
+			          <!-- <input type="text" name="instagram_url" id="instagram" class="validate"> -->
+			          <label class="grey-text text-darken-4" for="instagram">Instagram Profile</label>
+					</div>
+					
+					<div class="input-field col s12">
+						{{ form.twitter_url|add_class:'validate' }}
+						<!-- <input type="text" name="twitter_url" id="twitter" class="validate"> -->
+						<label class="grey-text text-darken-4" for="twitter">Twitter Profile</label>
+					  </div>
+
+					  <div class="input-field col s12">
+						{{ form.linkedin_url|add_class:'validate' }}
+						<!-- <input type="text" name="linkedin_url" id="linkedin" class="validate"> -->
+						<label class="grey-text text-darken-4" for="linkedin">Linkedin Profile</label>
+					  </div>
+
+			        <div class="input-field col s12">
+						
+						 <p><span class="grey-text text-darken-4">Contact Visible:</span></p>
+						 
+			            <div class="switch">
+                          <label>
+						   Off
+						   <input type="checkbox" name="contactPrivacy" value="1" {% if a.contactDetailsVisible == 1 %} checked {% endif %}>
+                           <!-- <input type="checkbox" name="contactDetailsVisible" value="True"> -->
+                           <span class="lever"></span>
+                           On
+                           </label>
+                        </div>
+                     </div>
+
+                     <div class="input-field col s12">
+			         	<p><span class="grey-text text-darken-4">Profile Visible:</span></p>
+			            <div class="switch">
+                          <label>
+						   Off
+						   <input type="checkbox" name="profilePrivacy" value="1" {% if a.profileDetailsVisible == 1 %} checked {% endif %}>
+                           <span class="lever"></span>
+                           On
+                           </label>
+                        </div>
+                     </div>
+
+                    <div class="input-field col s12">
+                         <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                         <i class="material-icons right">send</i>
+                         </button>
+                    </div>
+				</form>
+
+			      </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+    <div class="col l3"></div>
+  </div>
+
+
+</section>
+
+<script>
+	document.getElementById("editprofile").addEventListener('keydown', function(event) {
+        if (event.keyCode == 13) {
+			event.preventDefault();
+			return false;
+        }
+	}, false);
+	
+
+</script>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+

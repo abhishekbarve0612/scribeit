@@ -1,0 +1,228 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Blog Writing">
+    <meta name="author" content="ScribeIt">
+     <title>
+       {% if page %}
+       {{ page }}
+       {% else %}
+    {% block head %}
+
+    {% endblock head %}
+    {% endif %}
+  </title>
+
+    <!-- Bootstrap core CSS --> 
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet">
+   
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/templatemo-stand-blog.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-tagsinput.css' %}">
+
+    
+    {% block head-extra %}
+      
+    {% endblock head-extra %}
+      
+<!--
+
+TemplateMo 551 Stand Blog
+
+https://templatemo.com/tm-551-stand-blog
+
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'posts-home'  %}"><h2>Scribe<em>It!</em></h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item 
+              {% if page == 'Home' %}
+              active
+              {% endif %}
+              ">
+                <a class="nav-link" href="{% url 'posts-home'  %}">Home
+                  {% if page == 'Home' %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+                </a>
+              </li> 
+              <li class="nav-item 
+              {% if page == 'About Us' %}
+              active
+              {% endif %}
+              ">
+                <a class="nav-link" href="{% url 'about-us'  %}">About Us</a>
+                {% if page == 'About Us' %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+              </li>
+              <li class="nav-item 
+              {% if page == 'All Posts' %}
+              active
+              {% endif %}
+              ">
+                <a class="nav-link" href=" {% url 'post-list'  %} ">Blog Entries</a>
+                {% if page == 'All Posts' %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+              </li>
+              {% if page == 'View Post' %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url "post-detail" slug=instance.slug %}">View Post</a>
+                <span class="sr-only">(current)</span>
+              </li>
+              {% endif %}
+              {% if page == "Author's Profile" %}
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url "author-profile" id=profile.user.id %}">Author's Profile</a>
+                <span class="sr-only">(current)</span>
+              </li>
+              {% endif %}
+              <li class="nav-item 
+              {% if page == 'Contact Us' %}
+              active
+              {% endif %}
+              ">
+                <a class="nav-link" href="{% url 'contact-admin'  %} ">Contact Us</a>
+                {% if page == "Contact Us" %}
+                  <span class="sr-only">(current)</span>
+                  {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    
+
+    {% block content %}
+
+
+    {% endblock content %}
+
+
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="social-icons">
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Behance</a></li>
+              <li><a href="#">Linkedin</a></li>
+              <li><a href="#">Dribbble</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-12">
+            <div class="copyright-text">
+              <p>Copyright 2020 Scribe It Co.
+                    
+                 | Design: Web Dev Team</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    
+    {% block extrajs %}
+        
+    {% endblock extrajs %}
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Additional Scripts -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/owl.js' %}"></script>
+    <script src="{% static 'assets/js/slick.js' %}"></script>
+    <script src="{% static 'assets/js/isotope.js' %}"></script>
+    <script src="{% static 'assets/js/accordions.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-tagsinput.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/infinite.min.js' %}"></script>
+    <script language = "text/Javascript"> 
+
+      
+        
+
+      $('.bootstrap-tagsinput input[type=text]').on('keydown', function (e)
+        {
+            if (e.which == 188) //188 = comma
+            {
+                $(this).blur();
+                e.preventDefault();
+                $(this).focus();
+            }
+        });
+
+
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+
+      
+      
+
+    </script>
+
+    <script type="text/Javascript">
+      function func(temp){
+        
+        event.preventDefault();
+        $(temp).parent().parent().parent().parent().parent().children("div.comment-reply").fadeToggle();
+      };
+
+
+      var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        onBeforePageLoad: function () {
+          $('.loading').show();
+        },
+        onAfterPageLoad: function ($items) {
+          $('.loading').hide();
+        }
+      });
+      
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,269 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% load has_group %}
+{% block head %}
+
+{{ instance.author }}'s Post 
+
+{% endblock head %}
+
+
+{% block head-extra %}
+    {{ commentform.media }}
+    <style>
+      .wmd-preview{
+        display: none !important;
+    }
+    </style>
+{% endblock head-extra %}
+
+{% block content %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>{{ instance.title }}</h4>
+                <h2> Written By {{ instnce.author }} </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Banner Ends Here -->
+
+    <section class="call-to-action">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-content">
+              {% if request.user|has_group:"BlogWriters" %} 
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>You are a Blog Writer</span>
+                  <h4>Manage your Posts and Profile</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="{% url 'users:admin-home' %}" target="_parent">Click Here!</a>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>Do you have a good story to tell?</span>
+                  <h4>Be a blogger, Write your thoughts & share them here!!</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="{% url 'users:make-bloggers' %}" target="_parent">Click Here!</a>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      {% if instance.image %}
+                      <img src="{{ instance.image.url }}" alt="an image" class="img-responsive" >
+                      {% else %}
+                      <img src="{% static 'assets/images/banner-item-04.jpg'%}" alt="">
+                      {% endif %}
+                    </div>
+                    <div class="down-content">
+                      <span>Category</span>
+                      <a href="{% url "post-detail" slug=instance.slug %}"><h4>
+                        {% if instance.draft %} 
+                          <h4 style="color: red;" > Draft Post </h4>
+                        {% endif %}
+                        {{ instance.title }}</h4></a>
+                      <ul class="post-info">
+                        <li><a href="{% url "author-profile" id=instance.author.id %}"> {{ instance.author }} </a></li>
+                        <li><a href="#"> {{ instance.created_on }} </a></li>
+                        <li><a href="#"> {{ commentscount }} Comments</a></li>
+                      </ul>
+                     
+                        {{ instance.content|safe }}
+                      
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-4">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              {% if a %}
+                              {% for i in a %}
+                                <li><a href="{% url 'post-list' %}?tag={{ i }}"> {{ i|upper }} </a></li>
+                              {% endfor %}
+                              {% else %}
+                              <li><a href="#"> GENERAL </a></li>
+                              {% endif %}
+                            </ul>
+                          </div>
+                          <div class="col-4">
+                            <ul class="post-likes">
+                              <li>
+                                <i class="fa fa-eye"></i> {{ views }} |
+                                <a href="{% url 'post-like' id=instance.id %}?q=1"> <i class="fa fa-thumbs-up"></i></a>  {{ instance.likes }} 
+                                <!-- <a href="{% url 'post-like' id=instance.id %}?q=2"> <i class="fa fa-thumbs-down"></i>  </a>   {{ instance.dislikes }} -->
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="col-4">
+                            <ul class="post-share">
+                              <li><i class="fa fa-share-alt"></i></li>
+                              <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ requests.build_absolute_uri }}"">Facebook</a>,</li>
+          
+                              <li><a href="https://twitter.com/home?status={{ requests.build_absolute_uri }}"> Twitter</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item comments">
+                    <div class="sidebar-heading">
+                      <h2> {{ commentscount }}  comments</h2>
+                    </div>
+                    
+                    <div class="content">
+                      
+                      <ul>
+                        {% for comment in comments %}
+                        <li>
+                          <div class="author-thumb">
+                            <img src="" alt="">
+                          </div>
+                          <div class="right-content">
+                            <h4> {{ comment.user }} <span> {{ comment.timestamp|timesince }} ago </span>
+                              <small>
+                                | {% if comment.children.count > 0 %}
+                            {{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} 
+                           {% endif %}
+                           |
+                           <a href="javascript:;" onClick="func(this);"  class="reply-button">Reply</a>
+                           
+                              </small>
+                            </h4>
+                            <p>
+                              {{ comment.content|safe }}
+                            </p>
+                          </div>
+                          
+                            
+                        </li>
+                        
+                              <div class="content comment-reply" style="display: none;">
+                                <form id="comment" method="POST" action = "{% url "post-detail" slug=instance.slug %}" enctype="multipart/form-data"> {% csrf_token %}
+                                  
+                                  {{ commentform|crispy }}
+                                  <div class="col-lg-12">
+                                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                    {% if user.is_authenticated %}
+                                    <fieldset>
+                                      <button type="submit" name="comment" id="form-submit" class="main-button">Reply</button>
+                                    </fieldset>
+                                    {% else %}
+                                    <div>
+                                      Need to be signed in to reply on comments
+                                    </div>
+                                    {% endif %}
+                                  </div>
+                                
+                              </form>
+                              
+                            
+                            {% for child in comment.children %}
+                              <li class="replied">
+                                <div class="author-thumb">
+                                  <img src="" alt="">
+                                </div>
+                                <div class="right-content">
+                                  <h4> {{ child.user }} <span> {{ child.timestamp|timesince }} ago </span></h4>
+                                  <p> {{ child.content }} </p>
+                                </div>
+                              </li>
+                              {% endfor %}
+                            </div>
+                        {% endfor %}
+                        
+                      </ul>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  {% if user.is_authenticated %}
+                  <div class="sidebar-item submit-comment">
+                    <div class="sidebar-heading">
+                      <h2>Your comment</h2>
+                    </div>
+                    <div class="content">
+                        <form id="comment" method="POST" action = "{% url "post-detail" slug=instance.slug %}" enctype="multipart/form-data"> {% csrf_token %}
+                          
+                          {{ commentform|crispy }}
+                          <div class="col-lg-12">
+                            <fieldset>
+                              <button type="submit" id="form-submit" name="comment" class="main-button">Submit</button>
+                            </fieldset>
+                          </div>
+                        
+                      </form>
+                    </div>
+                  </div>
+                  {% else %}
+                  <div>
+                    <h3> In order to comment, you need to be signed in </h3>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            {% include '../sidebar.html' %}
+            <p>
+              Do you want to request author of this post to write new content based on your interest?</br>
+              Tell what you want to read next here!
+            </p>
+            <form class="input-group" method="POST" action="{% url "blog-request" slug=instance.slug %}" id="blog-request"> {% csrf_token %}
+              
+              <input type="hidden" name="author" value="{{ instance.author }}">
+              <div class="input-group mb-3">
+              <input class="blog-request-input form-control" type="text" name="userRequest" id="userRequest">
+              <div class="input-group-append">
+              <button type="submit" name="blog-request" id="formsubmit" class="blog-request-button form-control">Request</button>
+              </div>
+            </div>
+            
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    {% endblock content %}

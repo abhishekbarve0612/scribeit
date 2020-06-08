@@ -1,0 +1,31 @@
+
+.nav-wrapper{
+	background-color: #e65100;
+}
+
+.slider .indicators .indicator-item.active{
+	background-color: #e65100;
+}
+
+
+.parallax-container{
+	min-height: 280px;
+	height: auto;
+}
+
+.footer-one{
+	background: #e65100;
+}
+
+.footer-two{
+	background: #dd2c00;
+}
+
+.card-image img{
+	width: 400px;
+	height: 250px;
+}
+
+.card:hover{
+
+}

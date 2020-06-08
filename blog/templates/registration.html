@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+ 	<title>Registration From</title>
+ 	<link rel="stylesheet" type="text/css" href="{{ static 'assets/css/userstyle.css'}}">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+
+
+
+<body>
+
+<header class="site-header">
+
+	 <nav>
+  			<div class="logo">
+   				<h1>Blogging Website</h1>
+  			</div>
+
+  			<div class="menu"> 
+   				<ul>
+    				<li><a href="">Home</a></li>
+    				<li><a href="">About Us</a></li>
+    				<li><a href="">Contact Us</a></li>
+    				<li><a href="">Read Blogs</a></li>
+    				<li><a href="{% url 'users:user_login' %}">Login</a></li>
+  				</ul>
+  			</div>
+ 	 </nav>
+
+	 <section>
+
+  		<div class="leftside"> 
+  			 <img src="{{ static 'assets/images/intro.jpg'}}">
+  		</div>
+
+        <div class="rightside"> 
+        	<div class="form-box">
+           			 <h1>Register Here</h1>
+
+           			 <div class="social-icons">
+						<img src="{{ static 'assets/images/fb.png'}}">
+						<img src="{{ static 'assets/images/tw.png'}}">
+						<img src="{{ static 'assets/images/goo.png'}}">
+           			 </div>
+
+           			 <form class="input-group" id="register">
+						{% csrf_token %}
+						{{ user_form.as_p }}
+           			 	<!-- <input type="text" class="input-field" placeholder="Email Id" required>
+           			 	<input type="text" class="input-field" placeholder="Username" required>
+           			 	<input type="password" class="input-field" placeholder="Enter Password" required> -->
+           			 	<input type="checkbox" class="check-box" value="tnc"><label for="tnc">I agree to the terms & conditions</label>
+           			 	<button type="submit" class="submit-btn">Register</button>
+           			 </form>
+            		
+            </div>
+        </div>
+  
+     </section>
+
+</header>
+
+
+</body>
+</html>

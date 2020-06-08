@@ -1,0 +1,72 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load socialaccount %}
+{{ form.media.js }}
+
+
+{% block content %}
+	
+	
+<!-- Form -->
+<section class="fform" style="background: #ffd180;">
+	
+	<div class="row">
+	  <div class="col s12 l4 " style="overflow: hidden;">
+		  <img src="{% static 'assets/images/pa.png' %}" alt="image one" style="height: 500px; width: 450px;">
+
+	  </div>	
+
+	  <div class="col s12 l4">
+		<form class="input-group" method="POST" action="{% url 'users:register' %}" id="register">
+			{% csrf_token %}
+		   <h4 class="header center">Register Here</h4>
+		   <div class="social-icons" style="padding-top: 20px;">
+			<a href="{% provider_login_url 'facebook' %}"> <img src="{% static 'assets/images/fb.png'%}"> </a>
+			<a href="{% provider_login_url 'github' %}">  <img src="{% static 'assets/images/github-logo.png'%}"> </a>
+			 <a href="{% provider_login_url 'google' %}">  <img src="{% static 'assets/images/goo.png'%}"> </a>
+		 </div>
+		   <div class="row center">
+			  <div class="input-field col s12">
+				<input id="email" name="email" type="email" class="validate black-text text-darken-4">
+				<label for="email" class="black-text text-darken-4">Email</label>
+			  </div>
+			  <div class="input-field col s12">
+				<input id="userid" name="username" type="text" class="validate black-text text-darken-4">
+				<label for="userid" class="black-text text-darken-4">User Name</label>
+			  </div>
+			  <div class="input-field col s12">
+				<input id="pass" name="password" type="Password" class="validate black-text text-darken-4">
+				<label for="pass" class="black-text text-darken-4">Password</label>
+			  </div>
+
+			  <div class="input-field col s12">
+				<p>
+				   <label>
+					<input type="checkbox" class="filled-in" checked="checked" required/>
+					   <span class="black-text text-darken-4">I agree to the terms & conditions</span>
+				   </label>
+				</p>
+			  </div>
+
+			  <div class="input-field col s12">
+				<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+				   <i class="material-icons right">send</i>
+				  </button>
+			  </div>
+
+
+		   </div>
+		 </form>
+	  </div>
+
+	  <div class="col s12 l4"></div>
+	</div>
+
+</section>
+
+
+
+{% endblock content %}
+	

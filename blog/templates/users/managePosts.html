@@ -1,0 +1,38 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+
+{% block content %}
+	<!-- Cards -->
+<section class="fcard" style="background: #ffd180;">
+
+	<div class="row" style="padding-left: 50px; padding-right: 50px">
+		{% for post in posts %}
+		<div class="col s12 m12 l4" style="padding: 50px 50px;">
+			 <div class="card" style="background: #ffd180;">
+					<div class="card-image waves-effect waves-block waves-light">
+                          <img class="activator" src="
+                            {% if post.image.url %}
+                          {{ post.image.url }}
+                          {% else %}
+                          {% static 'assets/images/no-img.png' %}
+                          {% endif %}
+                          ">
+				  </div>
+					 <div class="card-content">
+					  <span class="card-title activator grey-text text-darken-4">{{ post.title }}</span>
+				  </div>
+				   <div class="row center" style="padding-left: 10px; padding-right: 10px">
+						<div class="col s12 l4" style="padding: 5px 5px;"><a href="{% url 'post-detail' slug=post.slug %}" class="waves-effect waves-light btn btn-small" style="background: #e65100 !important;"><i class="tiny material-icons left">remove_red_eye</i>view</a></div>
+						<div class="col s12 l4" style="padding: 5px 5px;"><a href="{% url 'edit-post' slug=post.slug %}" class="waves-effect waves-light btn btn-small" style="background: #e65100 !important;"><i class="tiny material-icons left">edit</i>edit</a></div>
+						<div class="col s12 l4" style="padding: 5px 5px;"><a href="{% url 'delete-post' slug=post.slug %}" class="waves-effect waves-light btn btn-small" style="background: #e65100 !important;"><i class="tiny material-icons left">delete</i>delete</a></div>
+				   </div>
+			 </div>
+		</div>
+		{% endfor %}
+	</div>
+
+	</section>
+
+
+{% endblock content %}

@@ -1,0 +1,332 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head-extra %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock head-extra %}
+    
+
+{% block content %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+        <section class="page-heading">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="text-content">
+                  <h4>
+                    {% if profile.user.first_name %}
+                    {{ profile.user.first_name }}
+                    {% endif %}
+                    {% if profile.user.last_name %}
+                    {{ profile.user.last_name }}
+                    {% endif %}
+                  </h4>
+                  <h2>Know about me!</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Banner Ends Here -->
+
+<section class="fcard" style="background: #ffd180; ">
+	
+	<div class="row">
+	  <div class="col-lg-8 offset-lg-2">
+		<div class="card" style="width: 100%; height: auto; padding:30px;">
+		  
+            
+		  <div class="row">
+
+            <div class="profile col-2">
+                <img class="img-responsive" style="width: 150px; height:150px;" src="{% if pp.url %}
+                {{ pp.url }}
+           {% else %}
+           {% static 'assets/images/mypic.jpg' %}
+             {% endif %}  ">
+                 
+             </div>
+
+				 <div class="cover col-10">
+					 <img class="sss"style="width: 100%; max-height:150px;" src="
+					 {% if cp.url %}
+				   {{ cp.url }}
+			  {% else %}
+			  {% static 'assets/images/cpic1.png' %}
+				{% endif %}  
+					 ">
+				  </div>
+  
+				
+  
+  
+		   </div>
+  
+		  <div class="card-content">
+			  
+				<hr>
+				{% if profile.contactDetailsVisible == 1 %}
+			  <div class="personal-details">
+                <h4>Contact Details</h4>
+                  <div class="row">
+                    <div class="col-2 offset-1">
+						<i class="material-icons tiny info">phone</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.mobileNumber %}
+					  {{ profile.mobileNumber }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+                    </div>
+                    <hr/>
+                    <div class="col-2 offset-1">
+                        <i class="material-icons tiny info">email</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.user.email %}
+					  <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+                    </div>
+                    <hr/>
+                    <div class="col-2 offset-1">
+                        <i class="material-icons tiny info">place</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.address %}
+					  {{ profile.address }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+                    </div>
+                  </div>
+				  
+			  </div>
+				<hr>
+				{% endif %}
+			  <div class="aboutme-details">
+				  <h4>About Me</h4>
+				  <div class="row">
+					
+                    <div class="col-2 offset-1">
+                        <i class="material-icons tiny info">person_outline</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.gender %}
+					        {{ profile.gender }}
+					    {% else %}
+					        Not Provided
+					    {% endif %}
+					</div>
+					<div class="col-2"></div>
+				</div>
+                  <div class="row">
+
+                    <div class="col-2 offset-1">
+                        <i class="material-icons tiny info">description</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.description %}
+					        {{ profile.description }}
+					    {% else %}
+					        Not Provided
+					    {% endif %}
+                    </div>
+                </div>
+			 
+				<hr>
+			  <div class="skills-details">
+                   <h4>Skills</h4>
+                   <div class="row">
+                   <div class="col-2 offset-1">
+                    <i class="material-icons tiny info">bookmark_border</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.skills %}
+					  {{ profile.skills }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+                    </div>
+                </div>
+				    
+			</div>
+				<hr>
+			  <div class="hobbies-details">
+				   <h4>Hobbies and Interest</h4>
+				   <div class="row">
+
+                    <div class="col-2 offset-1">
+                        <i class="material-icons tiny info">bookmark_border</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.interest %}
+					  {{ profile.interest }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+                    </div>
+                </div>
+					 
+			  </div>
+			  <hr>
+			  <h4>Favourites</h4>
+			  <div class="fav-movies">
+				<div class="row">
+
+                    <div class="col-2 offset-1">
+                        <i class="material-icons tiny info">movie_filter</i>
+                    </div>
+                    <div class="col-6 offset-1">
+                        {% if profile.fav_movie %}
+				   {{ profile.fav_movie }}
+				   {% else %}
+				   Not Provided
+				   {% endif %}
+                    </div>
+                </div>
+				   
+		   		</div>
+				<hr>
+				<div class="fav-music">
+					<div class="row">
+
+						<div class="col-2 offset-1">
+							<i class="material-icons tiny info">music_video</i>
+						</div>
+						<div class="col-6 offset-1">
+							{% if profile.fav_music %}
+							{{ profile.fav_music }}
+							{% else %}
+							Not Provided
+							{% endif %}
+						</div>
+					</div>
+					   
+					   </div>
+					<hr>
+					<div class="fav-books">
+						<div class="row">
+
+							<div class="col-2 offset-1">
+								<i class="material-icons tiny info">book</i>
+							</div>
+							<div class="col-6 offset-1">
+								{% if profile.fav_books %}
+								{{ profile.fav_books }}
+								{% else %}
+								Not Provided
+								{% endif %}
+							</div>
+						</div>
+						   </div>
+						<hr>
+			  <div class="social-details">
+				   <h4>Follow me at Social Media </h4>
+				   <div class="row">
+
+					<div class="col-2 offset-1">
+						<i class="fa fa-globe fa-1 info"></i>
+					</div>
+					<div class="col-6 offset-1">
+						{% if profile.website %}
+						<a href="{{ profile.website }}">{{ profile.website }}</a>
+						   {% else %}
+						   Not Provided
+						   {% endif %}
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-2 offset-1">
+						<i class="fa fa-facebook-square fa-1 info"></i>
+					</div>
+					<div class="col-6 offset-1">
+						{% if profile.facebook_url %}
+						<a href="{{ profile.facebook_url }}">{{ profile.facebook_url }}</a>
+						{% else %}
+						Not Provided
+						{% endif %}
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-2 offset-1">
+						<i class="fa fa-instagram fa-1 info"></i>
+					</div>
+					<div class="col-6 offset-1">
+						{% if profile.instagram_url %}
+						<a href="{{ profile.instagram_url }}">{{ profile.instagram_url }}</a>
+						{% else %}
+						Not Provided
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="col-2 offset-1">
+						<i class="fa fa-linkedin fa-1 info"></i>
+					</div>
+					<div class="col-6 offset-1">
+						{% if profile.linkedin_url %}
+						<a href="{{ profile.linkedin_url }}">{{ profile.linkedin_url }}</a>
+						{% else %}
+						Not Provided
+						{% endif %}
+					</div>
+				</div>
+				<div class="row">
+
+					<div class="col-2 offset-1">
+						<i class="fa fa-twitter fa-1 info"></i>
+					</div>
+					<div class="col-6 offset-1">
+						{% if profile.twitter_url %}
+					<a href="{{ profile.twitter_url }}">{{ profile.twitter_url }}</a>
+						{% else %}
+						Not Provided
+						{% endif %}
+					</div>
+				</div>
+				
+				   
+			  </div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="col l3"></div>
+	</div>
+  
+  </section>
+  
+	
+{% endblock content %}
+	
+
+<!--  Profile  -->
+<!--  Card     -->
+
+
+
+
+
+
+
+
+
+{% block extrajs %}
+        
+
+<!-- M Script -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+ {% endblock extrajs %}
+ 

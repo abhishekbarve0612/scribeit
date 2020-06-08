@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <title>
+
+        </title>
+    </head>
+
+    <body>
+        <h1> Home Page</h1>
+
+        {% for post in posts  %}
+
+         {{ post.id }} 
+        
+         <a href=" {% url "post-detail" id=post.id %} " >  {{ post.title }}  </a> <br/>
+
+        {{ post.created_on }} <br/>
+
+        {{ post.updated_on }} <br/>
+
+        {% endfor %}
+        
+    </body>
+</html>

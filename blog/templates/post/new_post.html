@@ -1,0 +1,42 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+        Create New Post
+    {% endblock head %}
+
+{% block head-extra %}
+    {{ form.media }}
+{% endblock head-extra %}
+    
+
+{% block content %}
+    
+<div class="container" style="padding-top: 120px;">
+
+    <form method="POST" action="." enctype="multipart/form-data"> {% csrf_token %}
+        {{ form|crispy }}
+       <!-- {% for field in form %}
+            <div class="row">
+                {{ field.errors }}
+                <div class="col-3">
+                    <span class="form-label"> 
+                        {{ field.label_tag }}
+                    </span>
+                </div>
+                <div class="col-6">
+                    <span>
+                         {{ field }}
+                    </span>
+                </div>
+                
+            </div>
+        {% endfor %} -->
+
+        <input type="submit" value="Save"/>
+    </form>
+
+</div>
+
+{% endblock content %}
+    

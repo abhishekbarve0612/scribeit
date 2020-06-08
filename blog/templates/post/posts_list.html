@@ -1,0 +1,207 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load has_group %}
+{% block head %}
+    All Blog Posts
+{% endblock head %}
+  
+  {% block content %}
+    
+  
+    
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Recent Posts</h4>
+                <h2>Our Recent Blog Entries</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Banner Ends Here -->
+
+    <section class="call-to-action">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-content">
+              {% if request.user|has_group:"BlogWriters" %} 
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>You are a Blog Writer</span>
+                  <h4>Manage your Posts and Profile</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="{% url 'users:admin-home' %}" target="_parent">Click Here!</a>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>Do you have a good story to tell?</span>
+                  <h4>Be a blogger, Write your thoughts & share them here!!</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="{% url 'users:make-bloggers' %}" target="_parent">Click Here!</a>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+
+                <!-- {% for post in posts %}
+                <div class="col-lg-6">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="an image" class="img-responsive" >
+                      {% else %}
+                        <img src="{% static 'assets/images/banner-item-04.jpg'%}" alt="">
+                      {% endif %}
+                    </div>
+                    <div class="down-content">
+                      <span>
+                        {% if post.category %}
+                          {{ post.category|upper }}
+                        {% else %}
+                          GENERAL
+                        {% endif %}
+                      </span>
+                      <a href="{% url "post-detail" slug=post.slug %}"><h4> {{ post.title }} </h4></a>
+                      <ul class="post-info">
+                        <li><a href="#"> {{ post.author }} </a></li>
+                        <li><a href="#"> {{ post.created_on }} </a></li>
+                        <li><a href="#">12 Comments</a></li>
+                      </ul>
+                      <p>
+                        {{ post.content|truncatewords:30 }}
+                      </p>
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              <li><a href="#">
+                                {% if post.tags %}
+                                {{ post.tags }}
+                                {% else %}
+                                  No Tags
+                                {% endif %}
+                              </a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %} -->
+
+                            <div class="infinite-container">
+                              <div class="row">
+                              {% for number in queryset %}
+                             
+                                <div class="col-lg-6">
+                                <div class="infinite-item">
+                                  
+                                    <div class="blog-post">
+                                      <div class="blog-thumb">
+                                        {% if number.image %}
+                                          <img src="{{ number.image.url }}" alt="an image" style="width: 300px; height: 300px;" class="img-responsive" >
+                                        {% else %}
+                                          <img src="{% static 'assets/images/banner-item-04.jpg'%}" alt="">
+                                        {% endif %}
+                                      </div>
+                                      <div class="down-content">
+                                        <span>
+                                          {% if number.category %}
+                                            {{ number.category|upper }}
+                                          {% else %}
+                                            GENERAL
+                                          {% endif %}
+                                        </span>
+                                        <a href="{% url "post-detail" slug=number.slug %}"><h4> {{ number.title }} </h4></a>
+                                        <ul class="post-info">
+                                          <li><a href="{% url "author-profile" id=number.author.id %}"> {{ number.author }} </a></li>
+                                          <li><a href="#"> {{ number.created_on }} </a></li>
+                                          <li><a href="#">{{ number.commentsCount }} Comments</a></li>
+                                        </ul>
+                                          {{ number.content|safe|truncatewords:30 }}
+                                        
+                                        <div class="post-options">
+                                          <div class="row">
+                                            <div class="col-lg-12">
+                                              <ul class="post-tags">
+                                                <li><i class="fa fa-tags"></i></li>
+                                                <li><a href="#">
+                                                  {% if number.tags %}
+                                                  {{ number.tags }}
+                                                  {% else %}
+                                                    No Tags
+                                                  {% endif %}
+                                                </a></li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endfor %}
+                            </div>
+                          </div>
+
+                            {% if numbers.has_next %}
+                              <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}">More</a>
+                            {% endif %}
+
+                            <div class="loading" style="display: none;">
+                              Loading...
+                            </div>
+                          
+
+                             
+
+                <!-- <div class="col-lg-12">
+                  <ul class="page-numbers">
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                  </ul>
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            {% include '../sidebar.html' %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% endblock content %}

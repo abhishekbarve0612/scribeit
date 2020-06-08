@@ -1,0 +1,237 @@
+{%  extends '../base.html' %}
+{% load static %}
+{% block head %}
+{% load has_group %}
+Welcome to Blogging site
+{% endblock head %}
+
+{% block content %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="main-banner header-text">
+      <div class="container-fluid">
+        <div class="owl-banner owl-carousel">
+          {% for q in newposts %}
+          <div class="item">
+            {% if q.image %}
+            <img src="{{ q.image.url }}" alt="an image" class="img-responsive card-image" style="width: 510px; height: 425px;">
+            {% endif %}
+            {% if not q.image %}
+            <img src="{% static 'assets/images/banner-item-04.jpg'%}" alt="">
+            {% endif %}
+            <div class="item-content">
+              <div class="main-content">
+                <div class="meta-category">
+                  <span>
+                    {% if q.tags %}
+                      {{  q.tags|upper }}
+                    {% endif %}
+                    {% if not q.tags %}
+                        GENERAL
+                    {% endif %}
+                  </span>
+                </div>
+                <a href="{% url "post-detail" slug=q.slug %}"><h4>{{ q.title }}</h4></a>
+                <ul class="post-info">
+                  <li><a href="{% url "author-profile" id=q.author.id %}">{{ q.author }}</a></li>
+                  <li><a href="#">{{ q.created_on }}</a></li>
+                  <li><a href="#">12 Comments</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <!-- Banner Ends Here -->
+    
+    <section class="call-to-action">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="main-content">
+              {% if request.user|has_group:"BlogWriters" %} 
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>You are a Blog Writer</span>
+                  <h4>Manage your Posts and Profile</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="{% url 'users:admin-home' %}" target="_parent">Click Here!</a>
+                  </div>
+                </div>
+              </div>
+              {% else %}
+              <div class="row">
+                <div class="col-lg-8">
+                  <span>Do you have a good story to tell?</span>
+                  <h4>Be a blogger, Write your thoughts & share them here!!</h4>
+                </div>
+                <div class="col-lg-4">
+                  <div class="main-button">
+                    <a href="{% url 'users:make-bloggers' %}" target="_parent">Click Here!</a>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+
+    <section class="blog-posts">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+
+                {% for q in updatedposts %}
+                <div class="col-lg-12">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      {% if q.image %}
+                      <img src="{{ q.image.url }}" alt="an image" class="img-responsive" style="width: 510px; height: 425px;">
+                      {% endif %}
+                      {% if not q.image %}
+                      <img src="{% static 'assets/images/banner-item-04.jpg'%}" alt="">
+                      {% endif %}
+                    </div>
+                    <div class="down-content">
+                      <span>
+                        {% if q.tags %}
+                          {{  q.tags|upper }}
+                        {% endif %}
+                        {% if not q.tags %}
+                            GENERAL
+                        {% endif %}
+                      </span>
+                      <a href="{% url "post-detail" slug=q.slug %}"><h4>
+                        {{ q.title }}
+                      </h4></a>
+                      <ul class="post-info">
+                        <li><a href="#">{{ q.author }}</a></li>
+                        <li><a href="#"> {{ q.created_on }} </a></li>
+                        <li><a href="#">12 Comments</a></li>
+                      </ul>
+                        {{ q.content|safe|truncatewords:50 }}
+                      <div class="post-options">
+                        <div class="row">
+                          <div class="col-6">
+                            <ul class="post-tags">
+                              <li><i class="fa fa-tags"></i></li>
+                              <li><a href="#">
+                                {% if q.tags %}
+                                  {{  q.tags|upper }}
+                                {% endif %}
+                                {% if not q.tags %}
+                                    GENERAL
+                                {% endif %}
+                              </a></li>
+                            </ul>
+                          </div>
+                          <div class="col-6">
+                            <ul class="post-share">
+                              <li><i class="fa fa-share-alt"></i></li>
+                              <li><a href="https://www.facebook.com/sharer/sharer.php?u={{ requests.build_absolute_uri }}"">Facebook</a>,</li>
+          
+                              <li><a href="https://twitter.com/home?status={{ requests.build_absolute_uri }}"> Twitter</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+
+                <div class="col-lg-12">
+                  <div class="main-button">
+                    <a href="{% url "post-list" %}">View All Posts</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+           <!-- <div class="sidebar">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="sidebar-item search">
+                    <form id="search_form" name="gs" method="GET" action="#">
+                      <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                    </form>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item recent-posts">
+                    <div class="sidebar-heading">
+                      <h2>Recent Posts</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        <li><a href="post-details.html">
+                          <h5>Vestibulum id turpis porttitor sapien facilisis scelerisque</h5>
+                          <span>May 31, 2020</span>
+                        </a></li>
+                        <li><a href="post-details.html">
+                          <h5>Suspendisse et metus nec libero ultrices varius eget in risus</h5>
+                          <span>May 28, 2020</span>
+                        </a></li>
+                        <li><a href="post-details.html">
+                          <h5>Swag hella echo park leggings, shaman cornhole ethical coloring</h5>
+                          <span>May 14, 2020</span>
+                        </a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item categories">
+                    <div class="sidebar-heading">
+                      <h2>Categories</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        {% for cat in categ %}
+                        <li><a href="posts/?cat={{ cat }}"> {{ cat }} </a></li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item tags">
+                    <div class="sidebar-heading">
+                      <h2>Tag Clouds</h2>
+                    </div>
+                    <div class="content">
+                      <ul>
+                        {% for tag in tags %}
+                        <li><a href="posts/?tag={{ tag }}"> {{ tag }} </a></li>
+                        {% endfor %}
+                        <li><a href="#">Creative</a></li>
+                        <li><a href="#">HTML5</a></li>
+                        <li><a href="#">Inspiration</a></li>
+                        <li><a href="#">Motivation</a></li>
+                        <li><a href="#">PSD</a></li>
+                        <li><a href="#">Responsive</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+            {% include '../sidebar.html' %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+   {% endblock content %}

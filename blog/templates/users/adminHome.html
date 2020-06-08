@@ -1,0 +1,69 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block extrahead %}
+    
+   
+{% endblock extrahead %}
+    
+
+{% block content %}
+
+    
+    <!-- Cards -->
+<section class="fcard infinite-container" style="background: #ffd180;">
+	
+    <div class="row" style="padding-top: 30px; padding-left: 25%; padding-right: 25%;">
+        {% for post in posts %}
+      <div class="col-lg-6" >
+        <div class="card infinite-item" style="background: #e65100; width:100%;">
+          <div class="card-image">
+            <img style="height: 400px;" src="
+            {% if post.image.url %}
+                          {{ post.image.url }}
+                          {% else %}
+                          {% static 'assets/images/no-img.png' %}
+                          {% endif %}
+                          ">
+            <span class="card-title">{{ post.title }}</span>
+          </div>
+          <div class="card-content" style="background: #ffd180; height:220px;">
+            <p>
+                {{ post.content|safe|truncatewords:25 }} 
+                <a href="{% url 'post-detail' slug=post.slug %}">Read more</a>
+            </p>
+          </div>
+          <div class="container">
+              <div class="row" style="background: #e65100;">
+                  <div class="col s12 l4 center" style="padding-top: 10px;">
+                      <span style="font-size: 30px;">{{ post.likes }}</span>
+                      <i class="small material-icons">thumb_up</i>
+                  </div>
+                  <div class="col s12 l4 center" style="padding-top: 10px;">
+                      <span style="font-size: 30px;">{{ post.viewscount }}</span>
+                       <i class="small material-icons">visibility</i>
+                   </div>
+                  <div class="col s12 l4 center" style="padding-top: 10px;"> 
+                      <span style="font-size: 30px;"> {{ post.commentsCount }} </span>
+                       <i class="small material-icons">comment</i>
+                   </div>
+              </div>
+              
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% if numbers.has_next %}
+      <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}">More</a>
+    {% endif %}
+
+    <div class="loading" style="display: none;">
+      Loading...
+    </div>
+    </div>
+   
+
+  </section>
+
+{% endblock content %}
+    

@@ -1,0 +1,324 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<section class="fcard" style="background: #ffd180">
+	
+	<div class="row">
+		<div class="col l1"></div>
+	  <div class="col s12 m8 l8">
+		<div class="card" style="width: 100%; height: auto;">
+		  
+  
+		  <div class="card-image">
+				 <div class="cover">
+					 <img class="cover-pic"style="width: 100%; " src="
+					 {% if cp.url %}
+				   {{ cp.url }}
+			  {% else %}
+			  {% static 'assets/images/cpic1.png' %}
+				{% endif %}  
+					 ">
+				  </div>
+  
+				<div class="profile">
+				   <img src="{% if pp.url %}
+				   {{ pp.url }}
+			  {% else %}
+			  {% static 'assets/images/mypic.jpg' %}
+				{% endif %}  ">
+					{% if request.user == profile.user %}
+				   <a class="btn-floating halfway-fab waves-effect waves-light red" href="{% url 'users:user-profile-edit' %}"><i class="material-icons">edit</i></a>
+					{% endif %}
+				</div>
+  
+  
+		   </div>
+  
+		  <div class="card-content">
+			  <div class="head-details">
+				  <h4>
+					  {% if profile.user.first_name %}
+					  {{ profile.user.first_name }}
+					  {% endif %}
+					  {% if profile.user.last_name %}
+					  {{ profile.user.last_name }}
+					  {% endif %}
+				  </h4>
+				  <h5>
+					  <span>Introduction</span>
+					  {% if profile.description %}
+					  {{ profile.description }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+				  </h5>
+			  </div>
+				<hr>
+			  <div class="personal-details">
+				  <h4>Contact Details</h4>
+				  <p><i class="material-icons tiny info">phone</i>
+					{% if profile.mobileNumber %}
+					  {{ profile.mobileNumber }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+				</p>
+				  <p><i class="material-icons tiny info">email</i>
+					{% if profile.user.email %}
+					  {{ profile.user.email }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+				</p>
+				  <p><i class="material-icons tiny info">place</i>
+					{% if profile.address %}
+					  {{ profile.address }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+				</p>
+			  </div>
+				<hr>
+			  <div class="aboutme-details">
+				  <h4>About Me</h4>
+				  <p>
+					<i class="material-icons tiny info">person_outline</i>
+					{% if profile.gender %}
+						{{ profile.gender }}
+					{% else %}
+						Not Provided
+					{% endif %}
+				  </p>
+				  <p><i class="material-icons tiny info">description</i>
+					{% if profile.description %}
+					  {{ profile.description }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+				</p>
+				
+			  </div>
+				<hr>
+			  <div class="skills-details">
+				   <h4>Skills</h4>
+				   <p><i class="fa fa-stop-circle-o fa-1  info"></i>
+					{% if profile.skills %}
+					  {{ profile.skills }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+				</p>  
+			</div>
+				<hr>
+			  <div class="hobbies-details">
+				   <h4>Hobbies and Interest</h4>
+					  <p><i class="fa fa-stop-circle-o fa-1 info"></i>
+						{% if profile.interest %}
+					  {{ profile.interest }}
+					  {% else %}
+					  Not Provided
+					  {% endif %}
+					</p>
+			  </div>
+			  <hr>
+			  <h4>Favourites</h4>
+			  <div class="fav-movies">
+				<h5>Favourite Movies</h5>
+				   <p><i class="fa fa-stop-circle-o fa-1 info"></i>
+					 {% if profile.fav_movie %}
+				   {{ profile.fav_movie }}
+				   {% else %}
+				   Not Provided
+				   {% endif %}
+				 </p>
+		   		</div>
+				<hr>
+				<div class="fav-music">
+					<h5>Favourite Music</h5>
+					   <p><i class="fa fa-stop-circle-o fa-1 info"></i>
+						 {% if profile.fav_music %}
+					   {{ profile.fav_music }}
+					   {% else %}
+					   Not Provided
+					   {% endif %}
+					 </p>
+					   </div>
+					<hr>
+					<div class="fav-books">
+						<h5>Favourite Books</h5>
+						   <p><i class="fa fa-stop-circle-o fa-1 info"></i>
+							 {% if profile.fav_books %}
+						   {{ profile.fav_books }}
+						   {% else %}
+						   Not Provided
+						   {% endif %}
+						 </p>
+						   </div>
+						<hr>
+			  <div class="social-details">
+				   <h4>Follow me at Social Media </h4>
+				   <p><i class="fa fa-globe fa-1 info"></i>
+					{% if profile.website %}
+					<a href="{{ profile.website }}">{{ profile.website }}</a>
+						   {% else %}
+						   Not Provided
+						   {% endif %}
+				</p>
+				   <p><i class="fa fa-facebook-square fa-1 info"></i>
+					{% if profile.facebook_url %}
+					<a href="{{ profile.facebook_url }}">{{ profile.facebook_url }}</a>
+					{% else %}
+					Not Provided
+					{% endif %}
+				</p>
+				   <p><i class="fa fa-instagram fa-1 info"></i>
+					{% if profile.instagram_url %}
+					<a href="{{ profile.instagram_url }}">{{ profile.instagram_url }}</a>
+					{% else %}
+					Not Provided
+					{% endif %}
+				</p>
+				<p><i class="fa fa-linkedin fa-1 info"></i>
+					{% if profile.linkedin_url %}
+					<a href="{{ profile.linkedin_url }}">{{ profile.linkedin_url }}</a>
+					{% else %}
+					Not Provided
+					{% endif %}
+				</p>
+				<p><i class="fa fa-twitter fa-1 info"></i>
+					{% if profile.twitter_url %}
+					<a href="{{ profile.twitter_url }}">{{ profile.twitter_url }}</a>
+					{% else %}
+					Not Provided
+					{% endif %}
+				</p>
+				   
+			  </div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="col l3"></div>
+	</div>
+  
+  </section>
+  
+	
+{% endblock content %}
+	
+
+<!--  Profile  -->
+<!--  Card     -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- footer -->
+<section class="ffooter">
+	<footer class="footer-one">
+		<div class="container">
+			<div class ="row center">
+
+
+				
+				<div class="col s12 l6">
+					<div class="container white-text">
+
+					<div class ="row">
+							<h4>Contact Us</h4>
+					</div>
+
+					<div class ="row">
+
+						<section class="fcontact">
+	                         <div class="row" style="padding-right: 10px padding-left:10px">
+		                        <div class="col s12 l4 center" style="padding:10px">
+			                        <i class="fa fa-address-card small"></i>
+			                        <h6 class="header">Shanti Nagar Delhi- 441502 </h6>
+		                        </div>
+		                        <div class="col s12 l4 center" style="padding: 10px">
+			                        <i class="fa fa-phone-square small"></i>
+		                   	        <h6 class="header">+918788303454</h6>
+							    </div>
+						 
+				             </div>
+				         </section>
+				    </div>    
+				    </div>
+				    </div>
+
+				<div class="col s12 l6">
+					<div class="container white-text">
+
+					<div class ="row">
+							<h4>Social Media</h4>
+					</div>
+
+					<div class ="row">
+
+						<section class="fmedia">
+	                         <div class="row" style="padding-right: 10px padding-left:10px">
+		                        <div class="col s12 l4 center" style="padding: 10px">
+			                        <!-- <i class="small material-icons">facebook-square</i> -->
+			                        <i class="fa fa-facebook-square small"></i>
+			                        <h6 class="header">Facebook</h6>
+		                        </div>
+		                        <div class="col s12 l4 center" style="padding: 10px">
+			                        <i class="fa fa-instagram small"></i>
+		                   	        <h6 class="header">Instagram</h6>
+							    </div>
+						    	<div class="col s12 l4 center" style="padding: 10px">
+								    <i class="fa fa-twitter-square small"></i>
+								    <h6 class="header">Twitter</h6>
+							    </div>
+				             </div>
+				         </section>
+				    </div>    
+				    </div>
+				    </div>
+
+
+
+			</div>
+	    </div>
+
+
+				
+
+					
+		
+		<div class="row footer-two">
+			<div class="col s12 l6 center">
+				<p class="white-text">&copy; Blogging Website</p>
+			</div>
+			<div class="col s12 l6 center">
+				<p class="white-text">Designed by Web Dev Team</p>
+			</div>
+		</div>
+
+	</footer>
+</section>
+
+
+</body>
+
+<!-- JQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+
+<!-- M Script -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+ <!-- custom js -->
+ <script src="js/loader.js"></script>
+
+</html>
